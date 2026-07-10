@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>SULTAN STORE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@300;400;600;700&family=Outfit:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+        /* ===== RESET & VARIABLES ===== */
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: #0a0a14;
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        :root {
+            --primary: #a855f7;
+            --secondary: #ec4899;
+            --accent-red: #dc143c;
+            --accent-blue: #3b82f6;
+            --accent-cyan: #00f2ff;
+            --bg-deep: #0a0a14;
+            --card-bg: #13131f;
+            --border: rgba(255, 255, 255, 0.06);
+            --text-muted: #6b7280;
+        }
+
+        /* ===== LOGIN ===== */
+        #login-page {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background: radial-gradient(circle at 20% 30%, #1a0a2e, #0a0a14 80%);
+        }
+        .login-box {
+            background: rgba(19, 19, 31, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            border-radius: 30px;
+            padding: 40px 30px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(168, 85, 247, 0.1);
+        }
+        .login-box .logo {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 3px solid var(--primary);
+            object-fit: cover;
+            margin-bottom: 15px;
+            box-shadow: 0 0 30px rgba(168, 85, 247, 0.3);
+        }
+        .login-box h1 {
+            font-family: 'Orbitron';
+            font-size: 28px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .login-box .sub {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin: 5px 0 25px;
+        }
+        .input-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        .input-group i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 18px;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 14px 20px 14px 50px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            color: #fff;
+            font-size: 16px;
+            font-family: 'Rajdhani', sans-serif;
+            transition: 0.3s;
+        }
+        .input-group input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.15);
+            outline: none;
+        }
+        .btn-login {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border: none;
+            border-radius: 14px;
+            color: #fff;
+            font-family: 'Orbitron';
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 5px 20px rgba(168, 85, 247, 0.4);
+        }
+        .btn-login:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(168, 85, 247, 0.6); }
+        .login-error { color: var(--accent-red); font-size: 13px; margin-top: 10px; display: none; }
+        .register-hint { margin-top: 20px; font-size: 13px; color: var(--text-muted); }
+        .register-hint a { color: var(--primary); text-decoration: none; }
+
+        /* ===== INTRO VIDEO ===== */
+        #intro-page {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: #000;
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        #intro-page video {
+            width: 100%;
+            max-width: 500px;
+            max-height: 80vh;
+            border-radius: 20px;
+            border: 2px solid rgba(168, 85, 247, 0.3);
+            box-shadow: 0 0 50px rgba(168, 85, 247, 0.2);
+        }
+        #intro-page .skip-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px 25px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 30px;
+            color: #fff;
+            font-family: 'Rajdhani';
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            letter-spacing: 1px;
+        }
+        #intro-page .skip-btn:hover { background: rgba(168,85,247,0.3); border-color: var(--primary); }
+
+        /* ===== DASHBOARD ===== */
+        #dashboard {
+            display: none;
+            padding: 20px 15px 100px;
+            max-width: 500px;
+            margin: 0 auto;
+            background: var(--bg-deep);
+            min-height: 100vh;
+        }
+        #dashboard .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0 20px;
+        }
+        #dashboard .header .brand {
+            font-family: 'Orbitron';
+            font-size: 22px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        #dashboard .header .menu-toggle {
+            font-size: 28px;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: 0.3s;
+            padding: 5px 10px;
+        }
+        #dashboard .header .menu-toggle:hover { color: #fff; }
+
+        /* ===== SIDEBAR ===== */
+        #sidebar {
+            position: fixed;
+            top: 0; left: -300px;
+            width: 280px;
+            height: 100%;
+            background: rgba(19,19,31,0.98);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid var(--border);
+            padding: 30px 20px;
+            transition: 0.3s cubic-bezier(0.4,0,0.2,1);
+            z-index: 2000;
+            overflow-y: auto;
+        }
+        #sidebar.open { left: 0; }
+        #sidebar .close-sidebar {
+            text-align: right;
+            font-size: 28px;
+            color: var(--text-muted);
+            cursor: pointer;
+            margin-bottom: 30px;
+        }
+        #sidebar .close-sidebar:hover { color: #fff; }
+        #sidebar .profile { text-align: center; margin-bottom: 30px; }
+        #sidebar .profile img {
+            width: 70px; height: 70px;
+            border-radius: 50%;
+            border: 2px solid var(--primary);
+            object-fit: cover;
+        }
+        #sidebar .profile h3 { font-family: 'Rajdhani'; font-size: 20px; margin-top: 10px; }
+        #sidebar .profile p { font-size: 13px; color: var(--text-muted); }
+        #sidebar .menu-list { list-style: none; }
+        #sidebar .menu-list li {
+            padding: 14px 16px;
+            border-radius: 12px;
+            margin-bottom: 8px;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-family: 'Rajdhani';
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            color: var(--text-muted);
+        }
+        #sidebar .menu-list li i { width: 24px; font-size: 20px; }
+        #sidebar .menu-list li:hover { background: rgba(168,85,247,0.1); color: #fff; }
+        #sidebar .menu-list li.active { background: rgba(168,85,247,0.2); color: #fff; border-left: 3px solid var(--primary); }
+
+        /* ===== CONTENT ===== */
+        .section-title {
+            font-family: 'Orbitron';
+            font-size: 18px;
+            margin: 25px 0 15px;
+            letter-spacing: 1px;
+            color: #fff;
+        }
+        .section-title i { color: var(--primary); margin-right: 8px; }
+
+        .check-section {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .check-section .check-btn {
+            padding: 12px 40px;
+            background: linear-gradient(135deg, var(--secondary), var(--accent-red));
+            border: none;
+            border-radius: 30px;
+            color: #fff;
+            font-family: 'Orbitron';
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 5px 20px rgba(220,20,60,0.4);
+        }
+        .check-section .check-btn:hover { transform: scale(1.05); }
+        .check-section .check-status {
+            margin-top: 15px;
+            font-size: 14px;
+            color: var(--text-muted);
+            display: none;
+        }
+
+        .apk-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+        .apk-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 16px 10px;
+            text-align: center;
+            transition: 0.3s;
+            cursor: default;
+        }
+        .apk-item:hover { border-color: var(--primary); box-shadow: 0 0 25px rgba(168,85,247,0.1); }
+        .apk-item i { font-size: 28px; color: var(--primary); margin-bottom: 6px; display: block; }
+        .apk-item .name { font-family: 'Rajdhani'; font-weight: 700; font-size: 14px; color: #fff; }
+
+        .price-section {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .price-section .price-title {
+            font-family: 'Orbitron';
+            font-size: 20px;
+            text-align: center;
+            margin-bottom: 15px;
+            color: var(--secondary);
+        }
+        .price-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+            font-family: 'Rajdhani';
+            font-size: 15px;
+        }
+        .price-item:last-child { border-bottom: none; }
+        .price-item .role { font-weight: 600; color: #fff; }
+        .price-item .cost { color: var(--accent-cyan); font-weight: 700; }
+        .price-note {
+            margin-top: 15px;
+            font-size: 13px;
+            color: var(--text-muted);
+            text-align: center;
+        }
+        .price-note strong { color: var(--primary); }
+
+        .banner-slider {
+            display: flex;
+            overflow-x: auto;
+            gap: 15px;
+            padding: 10px 0 20px;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none;
+        }
+        .banner-slider::-webkit-scrollbar { display: none; }
+        .banner-slider img {
+            flex: 0 0 90%;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 20px;
+            scroll-snap-align: center;
+            border: 1px solid var(--border);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+            transition: 0.3s;
+        }
+        .banner-slider img:hover { transform: scale(1.02); }
+
+        .footer {
+            text-align: center;
+            padding: 20px 0 10px;
+            color: var(--text-muted);
+            font-size: 12px;
+            border-top: 1px solid var(--border);
+            margin-top: 20px;
+        }
+        .footer a { color: var(--primary); text-decoration: none; }
+
+        .logout-btn {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            background: rgba(220,20,60,0.15);
+            border: 1px solid var(--accent-red);
+            border-radius: 14px;
+            color: var(--accent-red);
+            font-family: 'Rajdhani';
+            font-size: 16px;
+            font-weight: 700;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 30px;
+        }
+        .logout-btn:hover { background: rgba(220,20,60,0.25); }
+
+        /* ===== QRIS MODAL ===== */
+        .qris-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.92);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            backdrop-filter: blur(5px);
+        }
+        .qris-modal img {
+            max-width: 100%;
+            max-height: 90vh;
+            border-radius: 20px;
+            border: 2px solid var(--primary);
+            box-shadow: 0 0 60px rgba(168,85,247,0.5);
+            animation: zoomIn 0.3s ease;
+        }
+        @keyframes zoomIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .qris-modal .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 40px;
+            color: #fff;
+            cursor: pointer;
+            background: none;
+            border: none;
+            transition: 0.3s;
+        }
+        .qris-modal .close-modal:hover { color: var(--primary); transform: rotate(90deg); }
+
+        /* ===== ORDER SECTION ===== */
+        .order-section {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .order-section .section-title {
+            font-family: 'Orbitron';
+            font-size: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+            color: var(--accent-cyan);
+        }
+        .order-form .input-group { margin-bottom: 15px; }
+        .order-form .input-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 5px;
+            font-family: 'Rajdhani';
+            letter-spacing: 0.5px;
+        }
+        .order-form .input-group input,
+        .order-form .input-group select {
+            width: 100%;
+            padding: 14px 16px;
+            background: rgba(0,0,0,0.4);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            color: #fff;
+            font-size: 16px;
+            font-family: 'Rajdhani', sans-serif;
+            transition: 0.3s;
+            appearance: none;
+            -webkit-appearance: none;
+        }
+        .order-form .input-group input:focus,
+        .order-form .input-group select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 20px rgba(168,85,247,0.15);
+            outline: none;
+        }
+        .order-form .input-group select option { background: var(--card-bg); color: #fff; }
+        .order-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+            border: none;
+            border-radius: 14px;
+            color: #fff;
+            font-family: 'Orbitron';
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 5px 20px rgba(0,242,255,0.3);
+            margin-top: 10px;
+        }
+        .order-btn:hover { transform: scale(1.02); box-shadow: 0 8px 30px rgba(0,242,255,0.5); }
+        .order-btn:active { transform: scale(0.95); }
+
+        #orderResult {
+            margin-top: 25px;
+            padding: 20px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            display: none;
+        }
+        #orderResult .result-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            font-family: 'Rajdhani';
+            font-size: 15px;
+        }
+        #orderResult .result-item:last-child { border-bottom: none; }
+        #orderResult .result-label { color: var(--text-muted); }
+        #orderResult .result-value { color: #fff; font-weight: 600; }
+        #orderResult .result-total { font-size: 22px; color: var(--accent-cyan); font-weight: 700; }
+
+        .copy-message-box {
+            margin: 15px 0;
+            padding: 15px;
+            background: rgba(0,0,0,0.4);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+        .copy-message-box .msg-label { font-size: 12px; color: var(--text-muted); margin-bottom: 8px; }
+        .copy-message-box .msg-text {
+            font-family: 'Share Tech Mono';
+            font-size: 14px;
+            color: #fff;
+            word-break: break-word;
+            padding: 10px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        .copy-message-box .copy-msg-btn {
+            padding: 8px 20px;
+            background: var(--accent-cyan);
+            border: none;
+            border-radius: 20px;
+            color: #000;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Rajdhani';
+        }
+        .copy-message-box .copy-msg-btn:hover { transform: scale(1.05); }
+
+        .timer-section { margin: 15px 0; text-align: center; }
+        .timer-section .timer-display {
+            font-family: 'Orbitron';
+            font-size: 28px;
+            color: var(--secondary);
+            letter-spacing: 2px;
+        }
+        .timer-section progress {
+            width: 100%;
+            height: 8px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.1);
+            margin-top: 8px;
+        }
+        .timer-section progress::-webkit-progress-bar { background: rgba(255,255,255,0.1); border-radius: 10px; }
+        .timer-section progress::-webkit-progress-value { background: linear-gradient(90deg, var(--secondary), var(--accent-red)); border-radius: 10px; }
+        .timer-section .slow-text { font-size: 14px; color: var(--text-muted); margin-top: 8px; }
+        .timer-section .slow-text i { color: var(--secondary); }
+
+        .contact-buttons { display: flex; gap: 15px; margin-top: 20px; justify-content: center; flex-wrap: wrap; }
+        .contact-buttons .contact-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-family: 'Rajdhani';
+            font-weight: 700;
+            font-size: 16px;
+            text-decoration: none;
+            color: #fff;
+            transition: 0.3s;
+        }
+        .contact-buttons .contact-btn.telegram {
+            background: linear-gradient(135deg, #0088cc, #0077b5);
+        }
+        .contact-buttons .contact-btn.whatsapp {
+            background: linear-gradient(135deg, #25d366, #128c7e);
+        }
+        .contact-buttons .contact-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+        }
+        .reset-btn {
+            margin-top: 15px;
+            padding: 12px;
+            width: 100%;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            color: #fff;
+            font-family: 'Rajdhani';
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .reset-btn:hover {
+            background: rgba(255,255,255,0.1);
+        }
+        #orderResult .order-status {
+            text-align: center;
+            color: var(--accent-cyan);
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        .order-section .note {
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 15px;
+        }
+
+        /* QRIS in Order */
+        .order-qris {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+        .order-qris img {
+            width: 100%;
+            max-width: 200px;
+            border-radius: 10px;
+            border: 2px solid var(--accent-cyan);
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .order-qris img:hover { transform: scale(1.03); }
+
+        @media (max-width: 480px) {
+            .apk-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .banner-slider img {
+                height: 120px;
+            }
+            .login-box {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- LOGIN -->
+    <div id="login-page">
+        <div class="login-box">
+            <img src="https://files.catbox.moe/7pcb7y.jpeg" alt="logo" class="logo" />
+            <h1>SULTAN</h1>
+            <p class="sub">Login to access premium tools</p>
+            <div class="input-group">
+                <i class="fas fa-user"></i>
+                <input type="text" id="username" placeholder="Username" />
+            </div>
+            <div class="input-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" id="password" placeholder="Password" />
+            </div>
+            <button class="btn-login" id="loginBtn">LOGIN</button>
+            <div class="login-error" id="loginError">Username atau password salah!</div>
+            <div class="register-hint">
+                Belum punya akun? <a href="https://t.me/Sultanxasasin" target="_blank">Hubungi Admin</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTRO VIDEO -->
+    <div id="intro-page">
+        <video id="introVideo" autoplay playsinline>
+            <source src="https://www.image2url.com/r2/default/videos/1783343700023-40eee138-dfe4-4ed7-a191-8878f74976cc.mp4" type="video/mp4" />
+        </video>
+        <button class="skip-btn" id="skipIntro">LEWATI <i class="fas fa-forward"></i></button>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div id="dashboard">
+        <div class="header">
+            <div class="brand">SULTAN</div>
+            <div class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></div>
+        </div>
+
+        <div class="check-section">
+            <button class="check-btn" id="checkBtn"><i class="fas fa-check-circle"></i> CEK STATUS</button>
+            <div class="check-status" id="checkStatus">
+                <i class="fas fa-spinner fa-spin"></i> Memeriksa...
+            </div>
+        </div>
+
+        <!-- BANNER SLIDER -->
+        <div class="banner-slider">
+            <img src="https://www.image2url.com/r2/default/images/1783342930050-9c6a3415-0c28-47b1-b918-06b0f2cf868a.jpg" alt="banner baru" />
+            <img src="https://files.catbox.moe/5dsrbg.png" alt="AZX" />
+        </div>
+
+        <div class="section-title"><i class="fas fa-box"></i> LIST APK SULTAN</div>
+        <div class="apk-grid">
+            <div class="apk-item"><i class="fas fa-skull"></i><div class="name">HOLOWxRAT</div></div>
+            <div class="apk-item"><i class="fas fa-bolt"></i><div class="name">AZX V7</div></div>
+            <div class="apk-item"><i class="fas fa-crown"></i><div class="name">NEVOX</div></div>
+            <div class="apk-item"><i class="fas fa-magic"></i><div class="name">XTRVLN LAVENDER</div></div>
+            <div class="apk-item"><i class="fas fa-crown"></i><div class="name">@SULTAN</div></div>
+        </div>
+
+        <!-- HOLOWxRAT -->
+        <div class="price-section">
+            <div class="price-title">🔥 HOLOWxRAT</div>
+            <div class="price-item"><span class="role">Basic 1 Hari</span><span class="cost">3.000</span></div>
+            <div class="price-item"><span class="role">Basic 2 Hari</span><span class="cost">5.000</span></div>
+            <div class="price-item"><span class="role">Basic 3 Hari</span><span class="cost">7.000</span></div>
+            <div class="price-item"><span class="role">Basic 5 Hari</span><span class="cost">10.000</span></div>
+            <div class="price-item"><span class="role">Basic 7 Hari</span><span class="cost">13.000</span></div>
+            <div class="price-item"><span class="role">Basic 14 Hari</span><span class="cost">17.000</span></div>
+            <div class="price-item"><span class="role">Basic 21 Hari</span><span class="cost">19.000</span></div>
+            <div class="price-item"><span class="role">Basic 1 Bulan</span><span class="cost">20.000</span></div>
+            <div class="price-item"><span class="role">Basic Permanen</span><span class="cost">40.000</span></div>
+            <div class="price-item"><span class="role">Vip 1 Bulan</span><span class="cost">25.000</span></div>
+            <div class="price-item"><span class="role">Vip Permanen</span><span class="cost">50.000</span></div>
+        </div>
+
+        <!-- AZX V7 -->
+        <div class="price-section">
+            <div class="price-title">💎 AZX V7</div>
+            <div class="price-item"><span class="role">VIP 1 Bulan</span><span class="cost">15K</span></div>
+            <div class="price-item"><span class="role">VIP Permanen</span><span class="cost">25K</span></div>
+            <div class="price-note">
+                ✅ UNLOCK SENDER GLOBAL · SADAP · ALL TOOLS · FREE UPDATE<br />
+                <strong style="color: var(--secondary);">ADA HARGA ADA KUALITAS 🔥</strong>
+            </div>
+        </div>
+
+        <!-- NEVOX -->
+        <div class="price-section">
+            <div class="price-title">👾 NEVOX</div>
+            <div class="price-item"><span class="role">Member 1 Bulan</span><span class="cost">15K</span></div>
+            <div class="price-note">
+                ✅ UNLOCK SENDER GLOBAL · SADAP · ALL TOOLS · FREE UPDATE<br />
+                <strong style="color: var(--secondary);">MURAH MERIAH 🔥</strong>
+            </div>
+        </div>
+
+        <!-- XTRVLN LAVENDER -->
+        <div class="price-section" style="border-color: var(--accent-cyan);">
+            <div class="price-title" style="color: var(--accent-cyan);">🌸 𝙽𝙴𝚆 𝚁𝙸𝙻𝙸𝚂 𝙰𝙿𝙺 𝙱𝚄𝙶 𝚇𝚝𝚛𝚟𝚕𝚗 𝙻𝚊𝚟𝚎𝚗𝚍𝚎𝚛</div>
+            <div class="price-item"><span class="role">𝙼𝙴𝙼𝙱𝙴𝚁</span><span class="cost">15𝙺</span></div>
+            <div class="price-item"><span class="role">𝚁𝙴𝚂𝙴𝙻𝙻𝙴𝚁</span><span class="cost">25𝙺</span></div>
+            <div class="price-item"><span class="role">𝚅𝙸𝙿</span><span class="cost">35𝙺</span></div>
+            <div class="price-item"><span class="role">𝙰𝙳𝙼𝙸𝙽</span><span class="cost">55𝙺</span></div>
+            <div class="price-item"><span class="role">𝙾𝚆𝙽𝙴𝚁</span><span class="cost">75𝙺</span></div>
+            <div class="price-note" style="text-align: left; margin-top: 10px;">
+                <strong style="color: var(--accent-cyan);">𝙱𝙴𝙽𝙴𝙵𝙸𝚃 𝙱𝙴𝙻𝙸 𝙰𝙿𝙺 𝙽𝚈𝙰 ❗</strong><br />
+                ✅ 𝟷𝟶𝟶 𝚆𝙾𝚁𝙺<br />
+                ✅ 𝟷𝟶𝟶 𝙳𝙸 𝚄𝚁𝚄𝚂 𝙰𝙼𝙰 𝙳𝙴𝚅𝙴𝙻𝙾𝙿𝙴𝚁<br />
+                ✅ 𝚃𝙰𝙼𝙿𝙸𝙻𝙰𝙽 𝙺𝙴𝙲𝙴<br />
+                ✅ 𝙰𝙽𝚃𝙸 𝙽𝙰𝙼𝙰 𝙽𝚈𝙰 𝙰𝙼𝙿𝙰𝚂<br />
+                ✅ 𝚄𝙿𝙳𝙰𝚃𝙴 𝚃𝙴𝚁𝚄𝚂 𝙹𝙸𝙺𝙰 𝙼𝙾𝙾𝙳<br />
+                ✅ 𝙱𝙸𝚂𝙰 𝙳𝙸 𝙱𝙰𝙽𝚃𝚄 𝙹𝙸𝙺𝙰 𝙰𝙳𝙰 𝙺𝙴𝙽𝙳𝙰𝙻𝙰<br />
+                ✅ 𝙱𝙸𝚂𝙰 𝙱𝚄𝙶 𝚁𝙸𝙿𝙴𝚁 𝙳𝙰𝙽 𝙿𝙰𝙲𝙰𝚁 𝙼𝚄<br />
+                ✅ 𝙱𝙸𝚂𝙰 𝙾𝙿𝙴𝙽 𝙹𝙰𝚂𝙱𝚄𝙶<br />
+                ✅ 𝙱𝙸𝚂𝙰 𝙹𝙰𝙳𝙸 𝙺𝙰𝙽𝙶 𝙱𝚄𝙶<br />
+                <span style="color: var(--text-muted); font-size: 12px;">𝙳𝙻𝙻</span><br /><br />
+                <strong style="color: var(--secondary);">𝙼𝙸𝙽𝙰𝚃 𝙱𝚄𝚈? 𝙲𝙻𝙸𝙲𝙺 𝙱𝙰𝚆𝙰𝙷 𝚈𝙰𝚆𝚆 😘👇</strong><br />
+                <span style="color: var(--accent-cyan);">𝙿𝙰𝚈𝙼𝙴𝙽𝚃</span><br />
+                ✅ 𝙳𝙰𝙽𝙰<br />
+                ✅ 𝚀𝚁𝙸𝚂 𝙰𝙻𝙻 𝙿𝙰𝚈𝙼𝙴𝙽𝚃
+            </div>
+        </div>
+
+        <!-- ORDER SECTION -->
+        <div class="order-section">
+            <div class="section-title"><i class="fas fa-shopping-cart"></i> REQUEST ORDER</div>
+            <div class="order-form">
+                <div class="input-group">
+                    <label><i class="fas fa-user"></i> REQUEST USERNAME</label>
+                    <input type="text" id="orderUsername" placeholder="Masukkan Username Anda" />
+                </div>
+                <div class="input-group">
+                    <label><i class="fas fa-lock"></i> REQUEST PASSWORD</label>
+                    <input type="password" id="orderPassword" placeholder="Masukkan Password Anda" />
+                </div>
+                <div class="input-group">
+                    <label><i class="fas fa-mobile-alt"></i> PILIH APK + ROLE + DURASI</label>
+                    <select id="orderApk">
+                        <option value="holow">HOLOWxRAT</option>
+                        <option value="azx">AZX V7</option>
+                        <option value="nevox">NEVOX</option>
+                        <option value="xtrvln">XTRVLN LAVENDER</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label><i class="fas fa-tag"></i> PILIH ROLE</label>
+                    <select id="orderRole"></select>
+                </div>
+                <button class="order-btn" id="orderBtn"><i class="fas fa-paper-plane"></i> REQUEST ORDER</button>
+            </div>
+
+            <!-- HASIL ORDER -->
+            <div id="orderResult">
+                <h3 style="font-family:'Orbitron'; font-size:18px; text-align:center; color:var(--accent-cyan); margin-bottom:15px;">DETAIL PESANAN</h3>
+                <div class="result-item">
+                    <span class="result-label">Username</span>
+                    <span class="result-value" id="resultUsername">-</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Password</span>
+                    <span class="result-value" id="resultPassword">-</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">APK</span>
+                    <span class="result-value" id="resultApk">-</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Role</span>
+                    <span class="result-value" id="resultRole">-</span>
+                </div>
+                <div class="result-item" style="border-bottom: 2px solid var(--accent-cyan); padding-bottom: 12px;">
+                    <span class="result-label">Total Pembayaran</span>
+                    <span class="result-value result-total" id="resultTotal">-</span>
+                </div>
+                
+                <!-- QRIS Section -->
+                <div class="order-qris">
+                    <div style="color:var(--text-muted); font-size: 12px; margin-bottom: 8px;">SCAN QRIS PEMBAYARAN:</div>
+                    <img src="https://www.image2url.com/r2/default/images/1783343896812-02a59c67-1d81-4fff-aca9-f390c7e52dd6.jpeg" alt="QRIS" onclick="openQris()" />
+                </div>
+
+                <div class="copy-message-box">
+                    <div class="msg-label"><i class="fas fa-copy"></i> Copy pesan ini & kirim ke SULTAN:</div>
+                    <div class="msg-text" id="copyMessageText">-</div>
+                    <button class="copy-msg-btn" id="copyMsgBtn"><i class="fas fa-copy"></i> SALIN PESAN</button>
+                </div>
+
+                <div class="timer-section">
+                    <div class="timer-display" id="timerDisplay">05:00</div>
+                    <progress id="timerProgress" value="0" max="300"></progress>
+                    <div class="order-status" id="orderStatus">⏳ Selesaikan pembayaran sebelum waktu habis</div>
+                    <div class="slow-text"><i class="fas fa-heart"></i> maaf kalo sultan slow respon🙏</div>
+                </div>
+
+                <p style="text-align:center; color:var(--text-muted); font-size:15px; margin:15px 0;">
+                    <i class="fas fa-comment-dots" style="color:var(--accent-cyan);"></i> Silahkan chat sultan untuk melanjutkan pembayaran
+                </p>
+
+                <div class="contact-buttons">
+                    <a href="https://t.me/Sultanxasasin" target="_blank" class="contact-btn telegram">
+                        <i class="fab fa-telegram"></i> Telegram
+                    </a>
+                    <a href="https://wa.me/6285823770037" target="_blank" class="contact-btn whatsapp">
+                        <i class="fab fa-whatsapp"></i> WhatsApp
+                    </a>
+                </div>
+
+                <button class="reset-btn" id="resetBtn"><i class="fas fa-redo"></i> Reset Order</button>
+            </div>
+            <div class="note">* Setelah request, Anda akan melihat total pembayaran dan timer. Hubungi admin melalui Telegram atau WhatsApp.</div>
+        </div>
+
+        <!-- CONTACT -->
+        <div class="price-section" style="border-color: var(--primary);">
+            <div class="price-title"><i class="fas fa-headset"></i> CONTACT & PAYMENT</div>
+            <div style="text-align: center; margin-bottom: 15px;">
+                <p><i class="fab fa-telegram" style="color: var(--accent-cyan);"></i> <strong><a href="https://t.me/Sultanxasasin" target="_blank" style="color:var(--accent-cyan);text-decoration:none;">@Sultanxasasin</a></strong></p>
+                <p><i class="fab fa-tiktok" style="color: #fff;"></i> <strong>@sultanxbug</strong></p>
+                <p><i class="fas fa-credit-card" style="color: #f59e0b;"></i> DANA: 085823770037</p>
+                <p><i class="fas fa-qrcode" style="color: var(--secondary);"></i> QRIS: <a href="javascript:void(0)" onclick="openQris()" style="color: var(--accent-cyan);">klik disini</a></p>
+            </div>
+            <div class="price-note">
+                <strong>📩 ORDER? CHAT ADMIN SEKARANG!!</strong><br />
+                FAST RESPON | 100% TRUSTED
+            </div>
+        </div>
+
+        <button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> KELUAR</button>
+
+        <div class="footer">
+            &copy; 2026 SULTAN STORE - <a href="https://t.me/Sultanxasasin" target="_blank">@Sultanxasasin</a>
+        </div>
+    </div>
+
+    <!-- SIDEBAR -->
+    <div id="sidebar">
+        <div class="close-sidebar" id="closeSidebar"><i class="fas fa-times"></i></div>
+        <div class="profile">
+            <img src="https://files.catbox.moe/7pcb7y.jpeg" alt="profile" />
+            <h3>SULTAN</h3>
+            <p>Premium User</p>
+        </div>
+        <ul class="menu-list">
+            <li class="active"><i class="fas fa-home"></i> Dashboard</li>
+            <li onclick="window.open('https://t.me/Sultanxasasin','_blank')"><i class="fab fa-telegram"></i> Telegram</li>
+            <li onclick="window.open('https://wa.me/6285823770037','_blank')"><i class="fab fa-whatsapp"></i> WhatsApp</li>
+            <li onclick="window.open('https://www.tiktok.com/@sultanxbug','_blank')"><i class="fab fa-tiktok"></i> TikTok</li>
+            <li onclick="document.getElementById('logoutBtn').click()"><i class="fas fa-sign-out-alt"></i> Keluar</li>
+        </ul>
+        <div style="margin-top: 30px; color: var(--text-muted); font-size: 12px; text-align: center;">
+            <p>© 2026 SULTAN STORE</p>
+            <p style="font-size: 11px;">Hati-hati dengan penipuan, hanya via @Sultanxasasin</p>
+        </div>
+    </div>
+
+    <!-- QRIS MODAL -->
+    <div class="qris-modal" id="qrisModal">
+        <button class="close-modal" onclick="closeQris()">&times;</button>
+        <img src="https://www.image2url.com/r2/default/images/1783343896812-02a59c67-1d81-4fff-aca9-f390c7e52dd6.jpeg" alt="QRIS" />
+    </div>
+
+    <script>
+        const productData = {
+            holow: {
+                name: 'HOLOWxRAT',
+                roles: [
+                    { label: 'Basic 1 Hari', price: 3000 },
+                    { label: 'Basic 2 Hari', price: 5000 },
+                    { label: 'Basic 3 Hari', price: 7000 },
+                    { label: 'Basic 5 Hari', price: 10000 },
+                    { label: 'Basic 7 Hari', price: 13000 },
+                    { label: 'Basic 14 Hari', price: 17000 },
+                    { label: 'Basic 21 Hari', price: 19000 },
+                    { label: 'Basic 1 Bulan', price: 20000 },
+                    { label: 'Basic Permanen', price: 40000 },
+                    { label: 'Vip 1 Bulan', price: 25000 },
+                    { label: 'Vip Permanen', price: 50000 }
+                ]
+            },
+            azx: {
+                name: 'AZX V7',
+                roles: [
+                    { label: 'VIP 1 Bulan', price: 15000 },
+                    { label: 'VIP Permanen', price: 25000 }
+                ]
+            },
+            nevox: {
+                name: 'NEVOX',
+                roles: [
+                    { label: 'Member 1 Bulan', price: 15000 }
+                ]
+            },
+            xtrvln: {
+                name: 'XTRVLN LAVENDER',
+                roles: [
+                    { label: 'MEMBER', price: 15000 },
+                    { label: 'RESELLER', price: 25000 },
+                    { label: 'VIP', price: 35000 },
+                    { label: 'ADMIN', price: 55000 },
+                    { label: 'OWNER', price: 75000 }
+                ]
+            }
+        };
+
+        const orderApk = document.getElementById('orderApk');
+        const orderRole = document.getElementById('orderRole');
+        const orderBtn = document.getElementById('orderBtn');
+        const orderResult = document.getElementById('orderResult');
+        const resultUsername = document.getElementById('resultUsername');
+        const resultPassword = document.getElementById('resultPassword');
+        const resultApk = document.getElementById('resultApk');
+        const resultRole = document.getElementById('resultRole');
+        const resultTotal = document.getElementById('resultTotal');
+        const timerDisplay = document.getElementById('timerDisplay');
+        const timerProgress = document.getElementById('timerProgress');
+        const orderStatus = document.getElementById('orderStatus');
+        const orderUsername = document.getElementById('orderUsername');
+        const orderPassword = document.getElementById('orderPassword');
+        const copyMessageText = document.getElementById('copyMessageText');
+        const copyMsgBtn = document.getElementById('copyMsgBtn');
+        const resetBtn = document.getElementById('resetBtn');
+
+        let timerInterval = null;
+        let timeLeft = 300;
+        let currentOrderMessage = '';
+
+        function updateRoles() {
+            const selected = orderApk.value;
+            const data = productData[selected];
+            if (!data) return;
+            orderRole.innerHTML = '';
+            data.roles.forEach((role, index) => {
+                const opt = document.createElement('option');
+                opt.value = index;
+                opt.textContent = `${role.label} - Rp ${role.price.toLocaleString()}`;
+                orderRole.appendChild(opt);
+            });
+        }
+
+        function resetTimer() {
+            if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+            timeLeft = 300;
+            updateTimerDisplay();
+            timerProgress.value = 0;
+            orderStatus.textContent = '⏳ Selesaikan pembayaran sebelum waktu habis';
+            orderStatus.style.color = 'var(--accent-cyan)';
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            timerProgress.value = 300 - timeLeft;
+        }
+
+        function startTimer() {
+            resetTimer();
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay();
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    timerInterval = null;
+                    orderStatus.textContent = '⏰ Waktu pembayaran habis! Silahkan request ulang.';
+                    orderStatus.style.color = 'var(--accent-red)';
+                }
+            }, 1000);
+        }
+
+        function resetOrder() {
+            orderResult.style.display = 'none';
+            resetTimer();
+            orderUsername.value = '';
+            orderPassword.value = '';
+            orderApk.value = 'holow';
+            updateRoles();
+            currentOrderMessage = '';
+            copyMessageText.textContent = '-';
+        }
+
+        if (orderBtn) {
+            orderBtn.addEventListener('click', function() {
+                const user = orderUsername.value.trim();
+                const pass = orderPassword.value.trim();
+                if (!user || !pass) {
+                    alert('Username dan password harus diisi!');
+                    return;
+                }
+
+                const apkKey = orderApk.value;
+                const apkData = productData[apkKey];
+                if (!apkData) return;
+
+                const roleIndex = parseInt(orderRole.value);
+                const roleData = apkData.roles[roleIndex];
+                if (!roleData) return;
+
+                const apkName = apkData.name;
+                const roleName = roleData.label;
+                const price = roleData.price.toLocaleString();
+                currentOrderMessage = `sultan gw mau beli apk ${apkName} role ${roleName} durasi ${roleName} jawab chat gw.`;
+
+                resultUsername.textContent = user;
+                resultPassword.textContent = pass;
+                resultApk.textContent = apkName;
+                resultRole.textContent = roleName;
+                resultTotal.textContent = `Rp ${price}`;
+                copyMessageText.textContent = currentOrderMessage;
+
+                orderResult.style.display = 'block';
+                startTimer();
+                orderResult.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        }
+
+        if (copyMsgBtn) {
+            copyMsgBtn.addEventListener('click', function() {
+                if (!currentOrderMessage) {
+                    alert('Belum ada pesan untuk disalin!');
+                    return;
+                }
+                if (navigator.clipboard) {
+                    navigator.clipboard.writeText(currentOrderMessage).then(() => {
+                        alert('✅ Pesan berhasil disalin! Kirim ke SULTAN.');
+                    }).catch(() => {
+                        fallbackCopy(currentOrderMessage);
+                    });
+                } else {
+                    fallbackCopy(currentOrderMessage);
+                }
+            });
+        }
+
+        function fallbackCopy(text) {
+            const input = document.createElement('input');
+            input.value = text;
+            document.body.appendChild(input);
+            input.select();
+            document.execCommand('copy');
+            document.body.removeChild(input);
+            alert('✅ Pesan berhasil disalin! Kirim ke SULTAN.');
+        }
+
+        if (orderApk) {
+            orderApk.addEventListener('change', updateRoles);
+        }
+        if (resetBtn) {
+            resetBtn.addEventListener('click', resetOrder);
+        }
+        updateRoles();
+
+        const loginPage = document.getElementById('login-page');
+        const dashboard = document.getElementById('dashboard');
+        const introPage = document.getElementById('intro-page');
+        const loginBtn = document.getElementById('loginBtn');
+        const loginError = document.getElementById('loginError');
+
+        loginBtn.addEventListener('click', function() {
+            const user = document.getElementById('username').value.trim();
+            const pass = document.getElementById('password').value.trim();
+            if (user === '' || pass === '') {
+                loginError.textContent = 'Username dan password harus diisi!';
+                loginError.style.display = 'block';
+                return;
+            }
+            loginError.style.display = 'none';
+            loginPage.style.display = 'none';
+            introPage.style.display = 'flex';
+            const vid = document.getElementById('introVideo');
+            vid.play().catch(() => {});
+        });
+
+        document.getElementById('skipIntro').addEventListener('click', function() {
+            introPage.style.display = 'none';
+            dashboard.style.display = 'block';
+            document.getElementById('introVideo').pause();
+        });
+
+        document.getElementById('checkBtn').addEventListener('click', function() {
+            const status = document.getElementById('checkStatus');
+            status.style.display = 'block';
+            status.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Memeriksa...';
+            setTimeout(function() {
+                status.innerHTML = '<i class="fas fa-check-circle" style="color: #10b981;"></i> Akun VALID! Selamat menggunakan SULTAN STORE.';
+            }, 2000);
+        });
+
+        const sidebar = document.getElementById('sidebar');
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            sidebar.classList.toggle('open');
+        });
+        document.getElementById('closeSidebar').addEventListener('click', function() {
+            sidebar.classList.remove('open');
+        });
+        document.addEventListener('click', function(e) {
+            if (sidebar.classList.contains('open') && !sidebar.contains(e.target) && e.target.id !== 'menuToggle' && !e.target.closest('.menu-toggle')) {
+                sidebar.classList.remove('open');
+            }
+        });
+
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+            if (confirm('Yakin ingin keluar?')) {
+                dashboard.style.display = 'none';
+                loginPage.style.display = 'flex';
+                sidebar.classList.remove('open');
+                document.getElementById('username').value = '';
+                document.getElementById('password').value = '';
+                loginError.style.display = 'none';
+                introPage.style.display = 'none';
+                document.getElementById('introVideo').pause();
+                resetOrder();
+            }
+        });
+
+        function openQris() {
+            document.getElementById('qrisModal').style.display = 'flex';
+        }
+        function closeQris() {
+            document.getElementById('qrisModal').style.display = 'none';
+        }
+        document.getElementById('qrisModal').addEventListener('click', function(e) {
+            if (e.target === this) closeQris();
+        });
+
+        window.openQris = openQris;
+        window.closeQris = closeQris;
+        window.resetOrder = resetOrder;
+    </script>
+</body>
+</html>
